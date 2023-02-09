@@ -1,8 +1,8 @@
 package com.manager.restaurant.service;
 
-import com.manager.restaurant.dto.AuthenticationRequest;
-import com.manager.restaurant.dto.AuthenticationResponse;
-import com.manager.restaurant.dto.RegisterRequest;
+import com.manager.restaurant.dto.request.AuthenticationRequest;
+import com.manager.restaurant.dto.response.AuthenticationResponse;
+import com.manager.restaurant.dto.request.RegisterRequest;
 import com.manager.restaurant.model.Role;
 import com.manager.restaurant.model.User;
 import com.manager.restaurant.repository.UserRepository;
@@ -43,11 +43,11 @@ public class AuthenticationService {
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
+                        request.getUsername(),
                         request.getPassword()
                 )
         );
-        User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
+        User user = userRepository.findByEmail(request.getUsername()).orElseThrow();
         return AuthenticationResponse.builder()
                 .token(jwtService.generateToken(user))
                 .build();

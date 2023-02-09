@@ -1,6 +1,6 @@
 package com.manager.restaurant.controller;
 
-import com.manager.restaurant.dto.RegisterRequest;
+import com.manager.restaurant.dto.request.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

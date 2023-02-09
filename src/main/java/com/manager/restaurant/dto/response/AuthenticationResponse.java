@@ -1,4 +1,4 @@
-package com.manager.restaurant.dto;
+package com.manager.restaurant.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
-    String firstName;
-    String lastName;
-    String email;
-    String password;
+public class AuthenticationResponse {
+    private String token;
 }

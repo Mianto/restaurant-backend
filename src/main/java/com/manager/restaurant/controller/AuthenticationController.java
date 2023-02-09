@@ -1,8 +1,8 @@
 package com.manager.restaurant.controller;
 
-import com.manager.restaurant.dto.AuthenticationRequest;
-import com.manager.restaurant.dto.AuthenticationResponse;
-import com.manager.restaurant.dto.RegisterRequest;
+import com.manager.restaurant.dto.request.AuthenticationRequest;
+import com.manager.restaurant.dto.response.AuthenticationResponse;
+import com.manager.restaurant.dto.request.RegisterRequest;
 import com.manager.restaurant.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,22 +17,22 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
     private final AuthenticationService service;
 
-    @PostMapping("/registerCustomer")
-    public ResponseEntity<AuthenticationResponse> registerCustomer(
+    @PostMapping("/signUpCustomer")
+    public ResponseEntity<AuthenticationResponse> signUpCustomer(
             @RequestBody RegisterRequest request
     ) {
         return ResponseEntity.ok(service.registerCustomer(request));
     }
 
-    @PostMapping("/registerAdmin")
-    public ResponseEntity<AuthenticationResponse> registerAdmin(
+    @PostMapping("/signUpAdmin")
+    public ResponseEntity<AuthenticationResponse> signUpAdmin(
             @RequestBody RegisterRequest request
     ) {
         return ResponseEntity.ok(service.registerAdmin(request));
     }
 
-    @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(
+    @PostMapping("/login")
+    public ResponseEntity<AuthenticationResponse> login(
             @RequestBody AuthenticationRequest request
     ) {
         return ResponseEntity.ok(service.authenticate(request));
