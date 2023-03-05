@@ -1,14 +1,17 @@
 package com.manager.restaurant.service;
 
 import com.manager.restaurant.dto.request.AuthenticationRequest;
-import com.manager.restaurant.dto.response.AuthenticationResponse;
 import com.manager.restaurant.dto.request.RegisterRequest;
+import com.manager.restaurant.dto.response.AuthenticationResponse;
+import com.manager.restaurant.exception.UserAlreadyExistException;
+import com.manager.restaurant.exception.UserDoesNotExistException;
 import com.manager.restaurant.model.Role;
 import com.manager.restaurant.model.User;
 import com.manager.restaurant.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +29,9 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse registerCustomer(RegisterRequest request) {
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new UserAlreadyExistException("User already exist with given email. Please login");
+        }
         User user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
@@ -41,13 +47,19 @@ public class AuthenticationService {
 
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getUsername(),
-                        request.getPassword()
-                )
-        );
-        User user = userRepository.findByEmail(request.getUsername()).orElseThrow();
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getUsername(),
+                            request.getPassword()
+                    )
+            );
+        } catch (AuthenticationException e) {
+            throw new UserDoesNotExistException("Unable to login user", e);
+        }
+
+        User user = userRepository.findByEmail(request.getUsername())
+                .orElseThrow(() -> new UserDoesNotExistException("User does not exist with given email"));
         return AuthenticationResponse.builder()
                 .token(jwtService.generateToken(user))
                 .build();
