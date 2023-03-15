@@ -17,7 +17,9 @@ public class OrderItem {
     @Id
     @GeneratedValue
     private Long Id;
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "menu_item_id")
     private MenuItem menuItem;
     private Integer quantity;
+    private Double orderItemTotal;
 }

@@ -1,4 +1,4 @@
-package com.manager.restaurant.repository;
+package com.manager.restaurant.repository.basket;
 
 import com.manager.restaurant.model.basket.Basket;
 import org.springframework.data.jpa.repository.JpaRepository;

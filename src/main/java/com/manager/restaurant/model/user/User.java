@@ -1,4 +1,4 @@
-package com.manager.restaurant.model;
+package com.manager.restaurant.model.user;
 
 
 import jakarta.persistence.*;

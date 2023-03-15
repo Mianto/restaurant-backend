@@ -4,6 +4,7 @@ import com.manager.restaurant.dto.response.ExceptionMessageResponse;
 import com.manager.restaurant.exception.BasketNotPresentException;
 import com.manager.restaurant.exception.UserAlreadyExistException;
 import com.manager.restaurant.exception.UserDoesNotExistException;
+import com.manager.restaurant.exception.UserIsNotAdminException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -43,7 +44,7 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(BasketNotPresentException.class)
-    public ResponseEntity<ExceptionMessageResponse> handleUserAlreadyExistException(
+    public ResponseEntity<ExceptionMessageResponse> handleBasketDoesNotExistException(
             BasketNotPresentException basketNotPresentException,
             HttpServletRequest httpServletRequest
     ) {
@@ -53,5 +54,18 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
                 .timestamp(LocalDateTime.now())
                 .build();
         return new ResponseEntity<>(response, HttpStatusCode.valueOf(401));
+    }
+
+    @ExceptionHandler(UserIsNotAdminException.class)
+    public ResponseEntity<ExceptionMessageResponse> handleUserIsNotAdminException(
+            UserIsNotAdminException userIsNotAdminException,
+            HttpServletRequest httpServletRequest
+    ) {
+        ExceptionMessageResponse response = ExceptionMessageResponse.builder()
+                .message(userIsNotAdminException.getMessage())
+                .path(httpServletRequest.getRequestURI())
+                .timestamp(LocalDateTime.now())
+                .build();
+        return new ResponseEntity<>(response, HttpStatusCode.valueOf(403));
     }
 }

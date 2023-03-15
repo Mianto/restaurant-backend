@@ -1,6 +1,6 @@
 package com.manager.restaurant.config;
 
-import com.manager.restaurant.repository.UserRepository;
+import com.manager.restaurant.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

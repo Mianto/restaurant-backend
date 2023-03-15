@@ -6,14 +6,13 @@ import com.manager.restaurant.exception.BasketNotPresentException;
 import com.manager.restaurant.model.basket.Basket;
 import com.manager.restaurant.model.menu.MenuItem;
 import com.manager.restaurant.model.basket.BasketItem;
-import com.manager.restaurant.repository.BasketItemRepository;
-import com.manager.restaurant.repository.BasketRepository;
-import com.manager.restaurant.repository.MenuItemRepository;
+import com.manager.restaurant.repository.basket.BasketItemRepository;
+import com.manager.restaurant.repository.basket.BasketRepository;
+import com.manager.restaurant.repository.menu.MenuItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -26,18 +25,13 @@ public class BasketService {
         Basket basket = Basket.builder().build();
         basketRepository.save(basket);
 
-        return EmptyBasketResponse.builder().basketId(String.valueOf(basket.getId())).build();
+        return EmptyBasketResponse.builder().basketId(basket.getId()).build();
     }
 
     public Basket addOrDeleteItemFromBasket(String basketId, BasketItemRequest basketItemRequest) {
-        Optional<Basket> optionalBasket = basketRepository.findById(Long.valueOf(basketId));
-        if (optionalBasket.isEmpty()) {
-            throw new BasketNotPresentException("No Basket is present with given id.");
-        }
+        Basket basket = basketRepository.findById(Long.valueOf(basketId))
+                .orElseThrow(() -> new BasketNotPresentException("No Basket is present with given id."));
         Long menuItemId = basketItemRequest.getItemId();
-
-
-        Basket basket = optionalBasket.get();
 
         List<BasketItem> basketItems = basket.getBasketItems();
         List<BasketItem> basketItemsFilteredList = basketItems.stream()
@@ -45,12 +39,8 @@ public class BasketService {
                 .toList();
         BasketItem basketItem;
         if (basketItemsFilteredList.isEmpty()) {
-            Optional<MenuItem> optionalMenuItem = menuItemRepository.findById(menuItemId);
-            if (optionalMenuItem.isEmpty()) {
-                throw new BasketNotPresentException("Invalid menuItemId passed");
-            }
-            MenuItem menuItemInRequest = optionalMenuItem.get();
-
+            MenuItem menuItemInRequest = menuItemRepository.findById(menuItemId)
+                    .orElseThrow(() -> new BasketNotPresentException("Invalid menuItemId passed"));
 
             basketItem = BasketItem.builder()
                 .menuItem(menuItemInRequest)
@@ -65,7 +55,6 @@ public class BasketService {
             basketItem.setBasketItemTotal(basketItem.getMenuItem().getPrice() * basketItemRequest.getQuantity());
         }
         basketItemRepository.save(basketItem);
-
 
         double totalPrice = 0.0;
         for (BasketItem basketItem1: basketItems) {

@@ -1,7 +1,6 @@
-package com.manager.restaurant.controller;
+package com.manager.restaurant.controller.client;
 
 import com.manager.restaurant.model.menu.Menu;
-import com.manager.restaurant.repository.MenuRepository;
 import com.manager.restaurant.service.MenuService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

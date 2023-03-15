@@ -1,14 +1,14 @@
 package com.manager.restaurant;
 
-import com.manager.restaurant.model.Role;
-import com.manager.restaurant.model.User;
+import com.manager.restaurant.model.user.Role;
+import com.manager.restaurant.model.user.User;
 import com.manager.restaurant.model.menu.Menu;
 import com.manager.restaurant.model.menu.MenuGroup;
 import com.manager.restaurant.model.menu.MenuItem;
-import com.manager.restaurant.repository.MenuGroupRepository;
-import com.manager.restaurant.repository.MenuItemRepository;
-import com.manager.restaurant.repository.MenuRepository;
-import com.manager.restaurant.repository.UserRepository;
+import com.manager.restaurant.repository.menu.MenuGroupRepository;
+import com.manager.restaurant.repository.menu.MenuItemRepository;
+import com.manager.restaurant.repository.menu.MenuRepository;
+import com.manager.restaurant.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

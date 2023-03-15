@@ -1,7 +1,7 @@
 package com.manager.restaurant.service;
 
 import com.manager.restaurant.model.menu.Menu;
-import com.manager.restaurant.repository.MenuRepository;
+import com.manager.restaurant.repository.menu.MenuRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

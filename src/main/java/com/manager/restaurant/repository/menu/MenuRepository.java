@@ -1,4 +1,4 @@
-package com.manager.restaurant.repository;
+package com.manager.restaurant.repository.menu;
 
 import com.manager.restaurant.model.menu.Menu;
 import org.springframework.data.jpa.repository.JpaRepository;

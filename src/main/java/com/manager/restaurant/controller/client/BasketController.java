@@ -1,4 +1,4 @@
-package com.manager.restaurant.controller;
+package com.manager.restaurant.controller.client;
 
 import com.manager.restaurant.dto.request.BasketItemRequest;
 import com.manager.restaurant.dto.response.EmptyBasketResponse;
